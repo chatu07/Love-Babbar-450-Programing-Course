@@ -17,7 +17,10 @@ bool findElement(Node* root,int value){
             return true;
         }
         else if(value >=root->data){
-            
+            root = root->right;
+        }
+        else{
+            root = root->left;
         }
     }
     return false;
@@ -74,5 +77,14 @@ int main(){
     }
     cout<<"Inorder Traversal: "<<endl;
     inorderTraversal(root);
+    cout<<endl;
+    int value;
+    cin>>value;
+    if(findElement(root,value)){
+        cout<<"Element Found";
+    }
+    else{
+        cout<<"Not Found";
+    }
     return 0;
 }
