@@ -10,6 +10,67 @@ typedef struct Node{
     }
 }Node;
 
+Node* ins(){
+    
+}
+
+Node* inPre(Node* root){
+    while (root &&root->right!=NULL)
+    {
+        root = root->right;
+    }
+    return root;
+}
+
+Node* inScc(Node* root){
+    while (root &&root->left!=NULL)
+    {
+        root = root->left;
+    }
+    return root;
+}
+
+int height(Node* root){
+    if(root==NULL){
+        return 0;
+    }
+    1 + max(height(root->left),height(root->right));
+}
+
+Node* DeleteNode(Node* root,int key){
+    // cout<<"\nInside Function";
+    if(root== NULL){
+        return NULL;
+    }
+    if(root->left==NULL && root->right==NULL){
+        // cout<<"\nKey Found\n";
+        free(root);
+        return NULL;
+    }
+
+    if(key > root->data){
+        // cout<<"\nKey is Greater";
+        DeleteNode(root->right,key);
+    }else if(root->data < key){
+        // cout<<"\nKey is Smaller";
+        DeleteNode(root->left,key);
+    }
+    else{
+        cout<<"Key Found: "<<endl;
+        if(height(root->left) > height(root->right)){
+            cout<<"Height Checked\n";
+            Node* q = inScc(root->left);
+            root->data = q->data;
+            root->left = DeleteNode(root,q->data);
+        }
+        else{
+            Node* q = inScc(root->right);
+            root->data = q->data;
+            root->right = DeleteNode(root,q->data);
+        }
+    }
+}
+
 void insertNode(Node* root,int value){
     Node* node_Value=root;
     Node* prev_node;
@@ -61,6 +122,12 @@ int main(){
         insertNode(root,vct[i]);
     }
     cout<<"Inorder Traversal: "<<endl;
+    inorderTraversal(root);
+    cout<<"\nNode to Delete: ";
+    int key;
+    cin>>key;
+    Node* DeketedNode = DeleteNode(root,key);
+    cout<<"Inorder Traversal After Delete: "<<endl;
     inorderTraversal(root);
     return 0;
 }
