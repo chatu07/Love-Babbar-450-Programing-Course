@@ -11,7 +11,7 @@ typedef struct Node{
 }Node;
 
 Node* ins(){
-    
+
 }
 
 Node* inPre(Node* root){
@@ -61,12 +61,13 @@ Node* DeleteNode(Node* root,int key){
             cout<<"Height Checked\n";
             Node* q = inScc(root->left);
             root->data = q->data;
-            root->left = DeleteNode(root,q->data);
+            root->left = DeleteNode(root->left,q->data);
         }
         else{
+                cout<<"Height Checked\n";
             Node* q = inScc(root->right);
             root->data = q->data;
-            root->right = DeleteNode(root,q->data);
+            root->right = DeleteNode(root->right,q->data);
         }
     }
 }
